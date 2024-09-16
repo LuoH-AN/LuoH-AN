@@ -6,5 +6,13 @@ I'm a student from China 🇨🇳 <img align="center" src="https://github.com/im
 
 - Ask me about anything [here](https://github.com/LuoH-AN/LuoH-AN/issues)
 
+**Contact me**
+
+- Email: enltic@outlook.com
+
+- Telegram: @enltic
+
+- QQ: 1412219758
+
 | <a href="https://github.com/anuraghazra/github-readme-stats"><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=LuoH-AN&layout=compact&theme=buefy&hide_border=true" /></a> |
 | ------------- |
