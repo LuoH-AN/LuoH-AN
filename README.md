@@ -8,11 +8,9 @@ I'm a student from China 🇨🇳 <img align="center" src="https://github.com/im
 
 **Contact me**
 
-- Email: enltic@outlook.com
+- Email: enltlh@gmail.com
 
-- Telegram: @enltic
-
-- QQ: 1412219758
+- Telegram: @LuoH-AN
 
 | <a href="https://github.com/anuraghazra/github-readme-stats"><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=LuoH-AN&layout=compact&theme=buefy&hide_border=true" /></a> |
 | ------------- |
