@@ -7,7 +7,7 @@ on:
   workflow_dispatch:  # 允许手动触发
 
 env:
-  BASE_URL: ${{ vars.BASE_URL || 'https://ech0.enltlh.me/api' }}
+  BASE_URL: ${{ vars.BASE_URL || 'https://enltlh-memo.hf.space/api' }}
   ECH0_TOKEN: ${{ secrets.ECH0_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TARGET_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
