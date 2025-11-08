@@ -3,13 +3,12 @@ name: Ech0 Backup Automation
 on:
   schedule:
     # 每15分钟运行一次 (UTC时间)
-    - cron: '*/15 * * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch:  # 允许手动触发
 
 env:
   BASE_URL: ${{ vars.BASE_URL || 'https://ech0.enltlh.me/api' }}
-  USERNAME: ${{ secrets.ECH0_USERNAME }}
-  PASSWORD: ${{ secrets.ECH0_PASSWORD }}
+  ECH0_TOKEN: ${{ secrets.ECH0_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TARGET_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
