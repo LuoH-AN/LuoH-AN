@@ -5,13 +5,13 @@ from pathlib import Path
 
 # 从环境变量获取配置
 BASE_URL = os.environ.get('BASE_URL', 'https://ech0.enltlh.me/api')
-TOKEN = os.environ.get('ECH0_TOKEN')
+ECH0_TOKEN = os.environ.get('ECH0_TOKEN')
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 TARGET_CHAT_ID = os.environ.get('TARGET_CHAT_ID')
 
 # 验证必要的环境变量
 def validate_config():
-    required_vars = ['ECH0_TOKEN', 'TELEGRAM_BOT_TOKEN', 'TARGET_CHAT_ID']
+    required_vars = ['ECH0_TOKEN'， 'TELEGRAM_BOT_TOKEN', 'TARGET_CHAT_ID']
     missing_vars = [var for var in required_vars if not os.environ.get(var)]
     
     if missing_vars:
@@ -20,12 +20,12 @@ def validate_config():
     print("✅ 环境变量配置验证成功")
 
 # 1. 执行服务器端备份（创建快照）
-def perform_backup(token):
+def perform_backup(ECH0_TOKEN):
     url = f"{BASE_URL}/backup"
     print(f"🔄 正在创建服务器备份快照...")
     
     headers = {
-        "Authorization": f"Bearer {token}",
+        "Authorization": f"Bearer {ECH0_TOKEN}",
         "Accept": "application/json"
     }
     
@@ -50,8 +50,8 @@ def perform_backup(token):
         raise
 
 # 2. 导出备份（下载快照）
-def export_backup(token):
-    url = f"{BASE_URL}/backup/export?token={token}"
+def export_backup(ECH0_TOKEN):
+    url = f"{BASE_URL}/backup/export?token={ECH0_TOKEN}"
     print(f"📥 开始下载导出的备份文件: {url}")
     
     try:
@@ -156,10 +156,10 @@ def main():
         validate_config()
         
         # 步骤1: 执行服务器端备份
-        perform_backup(TOKEN)
+        perform_backup(ECH0_TOKEN)
         
         # 步骤2: 导出备份并下载
-        file_path = export_backup(TOKEN)
+        file_path = export_backup(ECH0_TOKEN)
         
         print("🎉 备份文件处理完成!")
         
