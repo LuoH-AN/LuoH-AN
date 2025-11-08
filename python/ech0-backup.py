@@ -5,14 +5,13 @@ from pathlib import Path
 
 # 从环境变量获取配置
 BASE_URL = os.environ.get('BASE_URL', 'https://ech0.enltlh.me/api')
-USERNAME = os.environ.get('USERNAME')
-PASSWORD = os.environ.get('PASSWORD')
+TOKEN = os.environ.get('TOKEN')
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 TARGET_CHAT_ID = os.environ.get('TARGET_CHAT_ID')
 
 # 验证必要的环境变量
 def validate_config():
-    required_vars = ['USERNAME', 'PASSWORD', 'TELEGRAM_BOT_TOKEN', 'TARGET_CHAT_ID']
+    required_vars = ['TOKEN'， 'TELEGRAM_BOT_TOKEN', 'TARGET_CHAT_ID']
     missing_vars = [var for var in required_vars if not os.environ.get(var)]
     
     if missing_vars:
@@ -20,65 +19,7 @@ def validate_config():
     
     print("✅ 环境变量配置验证成功")
 
-# 1. 登录获取管理员令牌
-def get_auth_token():
-    url = f"{BASE_URL}/login"
-    print(f"🔍 尝试登录到: {url}")
-    
-    payload = {
-        "username": USERNAME,
-        "password": PASSWORD
-    }
-    
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    
-    try:
-        print(f"📤 发送登录请求...")
-        print(f"🔑 用户名: {USERNAME}")
-        
-        response = requests.post(
-            url,
-            json=payload,
-            headers=headers,
-            timeout=30
-        )
-        
-        print(f"📥 响应状态码: {response.status_code}")
-        
-        if response.status_code != 200:
-            raise Exception(f"服务器返回状态码 {response.status_code}: {response.text}")
-        
-        # 检查响应内容类型
-        if "json" not in response.headers.get("content-type", "").lower():
-            raise Exception(f"服务器返回的响应不是JSON格式: {response.headers.get('content-type')}")
-        
-        data = response.json()
-        print(f"📋 解析后的JSON数据: {data}")
-        
-        if data.get("code") == 1:
-            token = data.get("data")
-            if token:
-                print("✅ 管理员认证成功")
-                return token
-            else:
-                raise Exception("服务器返回成功但没有提供token")
-        else:
-            raise Exception(f"登录失败: {data.get('message', '未知错误')}")
-            
-    except requests.exceptions.Timeout:
-        print("❌ 请求超时")
-        raise
-    except requests.exceptions.RequestException as e:
-        print(f"❌ 网络请求错误: {str(e)}")
-        raise
-    except Exception as e:
-        print(f"❌ 登录处理错误: {str(e)}")
-        raise
-
-# 2. 执行服务器端备份（创建快照）
+# 1. 执行服务器端备份（创建快照）
 def perform_backup(token):
     url = f"{BASE_URL}/backup"
     print(f"🔄 正在创建服务器备份快照...")
@@ -108,7 +49,7 @@ def perform_backup(token):
         print(f"❌ 备份处理错误: {str(e)}")
         raise
 
-# 3. 导出备份（下载快照）
+# 2. 导出备份（下载快照）
 def export_backup(token):
     url = f"{BASE_URL}/backup/export?token={token}"
     print(f"📥 开始下载导出的备份文件: {url}")
@@ -155,7 +96,7 @@ def export_backup(token):
         print(f"❌ 导出处理错误: {str(e)}")
         raise
 
-# 4. 通过Telegram发送备份文件
+# 3. 通过Telegram发送备份文件
 def send_backup_via_telegram(file_path):
     print(f"📤 正在通过Telegram发送备份文件: {file_path}")
     
@@ -214,14 +155,11 @@ def main():
         # 验证配置
         validate_config()
         
-        # 步骤1: 管理员认证
-        token = get_auth_token()
+        # 步骤1: 执行服务器端备份
+        perform_backup(TOKEN)
         
-        # 步骤2: 执行服务器端备份
-        perform_backup(token)
-        
-        # 步骤3: 导出备份并下载
-        file_path = export_backup(token)
+        # 步骤2: 导出备份并下载
+        file_path = export_backup(TOKEN)
         
         print("🎉 备份文件处理完成!")
         
