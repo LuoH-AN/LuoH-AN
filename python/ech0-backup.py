@@ -11,7 +11,7 @@ TARGET_CHAT_ID = os.environ.get('TARGET_CHAT_ID')
 
 # 验证必要的环境变量
 def validate_config():
-    required_vars = ['TOKEN'， 'TELEGRAM_BOT_TOKEN', 'TARGET_CHAT_ID']
+    required_vars = ['TOKEN', 'TELEGRAM_BOT_TOKEN', 'TARGET_CHAT_ID']
     missing_vars = [var for var in required_vars if not os.environ.get(var)]
     
     if missing_vars:
